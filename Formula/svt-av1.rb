@@ -12,8 +12,16 @@ class SvtAv1 < Formula
   stable do
     version "0.5.0"
     patch do
-      url "https://raw.githubusercontent.com/1480c1/homebrew-SVT-encoders/master/patches/SVT-AV1/0001-CMakeLists-Remove-mavx-and-apply-correct-cflags.patch"
-      sha256 "57d24958c13460a397d827ad4d6a94e4914806e43e73440317703c45a3d05d56"
+      url "https://raw.githubusercontent.com/1480c1/homebrew-SVT-encoders/master/patches/SVT-AV1/0001-CMakeLists-Prepare-0.5.0-for-packaging.patch"
+      sha256 "cdd15599d3b16201af4c1ee5e8d7a8503248fc586da33df2b8844e63161db07b"
+    end
+    patch do
+      url "https://raw.githubusercontent.com/1480c1/homebrew-SVT-encoders/master/patches/SVT-AV1/0002-Synonyms-only-use-avx-functions-if-MSVC.patch"
+      sha256 "f1d41ca092859b8f592a550eb6816a761b1d43db45e63d7f1de216c65c75f551"
+    end
+    patch do
+      url "https://raw.githubusercontent.com/1480c1/homebrew-SVT-encoders/master/patches/SVT-AV1/0003-IntroPrediction_Intrinsic_AVX2-only-use-avx-function.patch"
+      sha256 "6e04f44553b9a75a7d01bb058a817bc075195fc00915b71ed98a9de2043f2ce1"
     end
   end
 
