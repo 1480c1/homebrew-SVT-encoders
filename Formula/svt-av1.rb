@@ -22,7 +22,7 @@ class SvtAv1 < Formula
   end
 
   depends_on "cmake" => :build
-  depends_on "yasm" => :build
+  depends_on "nasm" => :build
 
   resource "bus_qcif_15fps.y4m" do
     url "https://media.xiph.org/video/derf/y4m/bus_qcif_15fps.y4m"
@@ -32,10 +32,11 @@ class SvtAv1 < Formula
   def install
     mkdir "_build" do
       system "cmake", "..", *std_cmake_args
-      args = [ "-DCMAKE_ASM_NASM_COMPILER=yasm" ]
       if build.head?
-        args << "-DNATIVE=OFF"
-        args << "-DBUILD_TESTING=OFF"
+        args = %W[
+          -DBUILD_TESTING=OFF
+          -DNATIVE=OFF
+        ]
       end
       system "make", "install"
       prefix.install_metafiles
