@@ -18,6 +18,7 @@ script:
       echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
     fi
   - brew tap 1480c1/SVT-Encoders
+  - [[ -f "/home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/svt-av1.rb" ]] && chmod 644 /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/svt-av1.rb
   - brew audit SVT-AV1
   - brew install --build-bottle SVT-AV1
 after_script:
