@@ -6,7 +6,6 @@ osx_image:
   - xcode10.2
   - xcode10.1
   - xcode9.2
-  - xcode8
 dist: xenial
 install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"; fi
@@ -23,16 +22,9 @@ script:
   - brew install --build-bottle SVT-AV1
 after_script:
   - brew bottle SVT-AV1
-  - if command -v defaults &>/dev/null; then OSX_VERSION=$(defaults read loginwindow SystemVersionStampAsString)
-  - |
-    if [[ -n "$OSX_VERSION" ]]; then
-      if [[ ${OSX_VER:3:2} -eq 13 ]]; then
-        curl -F'file=@svt-av1--0.5.0.mojave.bottle.tar.gz' https://0x0.st
-      elif [[ ${OSX_VER:3:2} -eq 12 ]]; then
-        curl -F'file=@svt-av1--0.5.0.high_sierra.bottle.tar.gz' https://0x0.st
-      else
-        curl -F'file=@svt-av1--0.5.0.sierra.bottle.tar.gz' https://0x0.st
-      fi
-    else
-      curl -F'file=@svt-av1--0.5.0.x86_64_linux.bottle.tar.gz' https://0x0.st
-    fi
+matrix:
+  exclude:
+    - os: linux
+      osx_image: xcode10.1
+    - os: linux
+      osx_image: xcode9.2
