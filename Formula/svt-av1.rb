@@ -19,9 +19,7 @@ class SvtAv1 < Formula
     end
   end
 
-  head do
-    url "https://github.com/OpenVisualCloud/SVT-AV1.git"
-  end
+  head "https://github.com/OpenVisualCloud/SVT-AV1.git"
 
   depends_on "cmake" => :build
   depends_on "yasm" => :build
