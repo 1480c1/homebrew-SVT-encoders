@@ -11,12 +11,11 @@ install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"; fi
 script:
   - |
-    if [ "$TRAVIS_OS_NAME" = "linux" ]; then
-      test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-      test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-      test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
-      echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
-    fi
+      if [ "$TRAVIS_OS_NAME" = "linux" ]; then
+        test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+        test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+      fi
+
   - brew tap 1480c1/SVT-Encoders
   - [[ -f "/home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/svt-av1.rb" ]] && chmod 644 /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/svt-av1.rb
   - brew audit SVT-AV1
