@@ -32,8 +32,11 @@ class SvtAv1 < Formula
   def install
     mkdir "_build" do
       system "cmake", "..", *std_cmake_args
-      args = [ "-DNATIVE=OFF", "-DBUILD_TESTING=OFF" ] if build.head?
-      args = [ "-DCMAKE_ASM_NASM_COMPILER=yasm" ] if build.stable?
+      args = [ "-DCMAKE_ASM_NASM_COMPILER=yasm" ]
+      if build.head?
+        args << "-DNATIVE=OFF"
+        args << "-DBUILD_TESTING=OFF"
+      end
       system "make", "install"
       prefix.install_metafiles
     end
