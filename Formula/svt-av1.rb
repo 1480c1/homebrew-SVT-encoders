@@ -12,8 +12,8 @@ class SvtAv1 < Formula
   stable do
     version "0.5.0"
     patch do
-      url "https://gist.githubusercontent.com/1480c1/19d703727adceb91c09dd0d55a853ff8/raw/0001-CMakeLists-Remove-mavx-and-apply-correct-cflags.patch"
-      sha256 "ebc4bcd1dc96c3593f0fe7a10b6b8066ac050e7fc03c2aab66c9c747c32fd56d"
+      url "https://raw.githubusercontent.com/1480c1/homebrew-SVT-encoders/master/patches/SVT-AV1/0001-CMakeLists-Remove-mavx-and-apply-correct-cflags.patch"
+      sha256 "57d24958c13460a397d827ad4d6a94e4914806e43e73440317703c45a3d05d56"
     end
   end
 
