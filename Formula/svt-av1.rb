@@ -1,16 +1,10 @@
 class SvtAv1 < Formula
   desc "Multicore AV1 Encoder from OpenVisualCloud"
   homepage "https://github.com/OpenVisualCloud/SVT-AV1"
-  url "https://github.com/OpenVisualCloud/SVT-AV1/archive/v0.5.0.tar.gz"
-  sha256 "cdf36926820d2efcf019ed1a1e66cbc2470b86a28606a00497eb842bd2e495b1"
-  head "https://github.com/OpenVisualCloud/SVT-AV1.git"
-
-  head do
-    url "https://github.com/OpenVisualCloud/SVT-AV1.git"
-  end
 
   stable do
-    version "0.5.0"
+    url "https://github.com/OpenVisualCloud/SVT-AV1/archive/v0.5.0.tar.gz"
+    sha256 "cdf36926820d2efcf019ed1a1e66cbc2470b86a28606a00497eb842bd2e495b1"
     patch do
       url "https://raw.githubusercontent.com/1480c1/homebrew-SVT-encoders/master/patches/SVT-AV1/0001-CMakeLists-Prepare-0.5.0-for-packaging.patch"
       sha256 "cdd15599d3b16201af4c1ee5e8d7a8503248fc586da33df2b8844e63161db07b"
@@ -23,6 +17,10 @@ class SvtAv1 < Formula
       url "https://raw.githubusercontent.com/1480c1/homebrew-SVT-encoders/master/patches/SVT-AV1/0003-IntroPrediction_Intrinsic_AVX2-only-use-avx-function.patch"
       sha256 "6e04f44553b9a75a7d01bb058a817bc075195fc00915b71ed98a9de2043f2ce1"
     end
+  end
+
+  head do
+    url "https://github.com/OpenVisualCloud/SVT-AV1.git"
   end
 
   depends_on "cmake" => :build
@@ -52,7 +50,7 @@ class SvtAv1 < Formula
   test do
     system "#{bin}/SvtAv1EncApp", "-help"
     resource("bus_qcif_15fps.y4m").stage do
-      system "#{bin}/SvtAv1EncApp", "-enc-mode","8",
+      system "#{bin}/SvtAv1EncApp", "-enc-mode", "8",
                                     "-i", "bus_qcif_15fps.y4m",
                                     "-b", "bus_qcif_15fps.ivf"
     end
