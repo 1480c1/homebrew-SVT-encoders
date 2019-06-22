@@ -2,6 +2,8 @@ class SvtAv1 < Formula
   desc "Multicore AV1 Encoder from OpenVisualCloud"
   homepage "https://github.com/OpenVisualCloud/SVT-AV1"
 
+  head "https://github.com/OpenVisualCloud/SVT-AV1.git"
+
   stable do
     url "https://github.com/OpenVisualCloud/SVT-AV1/archive/v0.5.0.tar.gz"
     sha256 "cdf36926820d2efcf019ed1a1e66cbc2470b86a28606a00497eb842bd2e495b1"
@@ -18,8 +20,6 @@ class SvtAv1 < Formula
       sha256 "6e04f44553b9a75a7d01bb058a817bc075195fc00915b71ed98a9de2043f2ce1"
     end
   end
-
-  head "https://github.com/OpenVisualCloud/SVT-AV1.git"
 
   depends_on "cmake" => :build
   depends_on "yasm" => :build
