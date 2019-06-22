@@ -12,7 +12,7 @@ install:
 script:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv); test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv); fi
   - brew tap 1480c1/SVT-Encoders
-  - [[ -f "/home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/svt-av1.rb" ]] && chmod 644 /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/svt-av1.rb
+  - if [[ -f "/home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/svt-av1.rb" ]]; then chmod 644 /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/svt-av1.rb; fi
   - brew audit SVT-AV1
   - brew install --build-bottle SVT-AV1
 after_script:
