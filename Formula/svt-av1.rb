@@ -13,7 +13,7 @@ class SvtAv1 < Formula
     version "0.5.0"
     patch do
       url "https://gist.githubusercontent.com/1480c1/19d703727adceb91c09dd0d55a853ff8/raw/0001-CMakeLists-Remove-mavx-and-apply-correct-cflags.patch"
-      sha256 "51b252fe5267a48bc38f61f208c7b3f91d1c6d65b9289585a1fdde9377c7a79c"
+      sha256 "ebc4bcd1dc96c3593f0fe7a10b6b8066ac050e7fc03c2aab66c9c747c32fd56d"
     end
   end
 
