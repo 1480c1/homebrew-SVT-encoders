@@ -21,6 +21,15 @@ class SvtAv1 < Formula
     end
   end
 
+  bottle do
+    root_url "https://github.com/1480c1/homebrew-SVT-encoders/releases/download/bottle"
+    cellar :any
+    sha256 "b93dea0337e03989ca4578a81e055c732a67a16afb75c98992928243940f6457" => :mojave
+    sha256 "3344c5bf42e1aa071b473a0389ad08d012aefad40a6c9de1862c5d37ca124249" => :high_sierra
+    sha256 "94bc088243c4435f2f5a61b7886ae363fddd2869f00cd710e32224d8f24454cd" => :sierra
+    sha256 "845608ff7036bb025ac1ad6afc09eb021fcce9e43d13e36f65abc7e8de6ef24f" => :x86_64_linux
+  end
+
   depends_on "cmake" => :build
   depends_on "nasm" => :build
 
