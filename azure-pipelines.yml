@@ -13,7 +13,13 @@ pool:
 steps:
 - bash: |
     set -e
-    [[ "$Agent.OS" = "Darwin" ]] && sudo xcode-select --switch /Applications/Xcode_10.2.app/Contents/Developer
+    if [[ "$Agent.OS" = "Darwin" ]]; then
+      sudo xcode-select --switch /Applications/Xcode_10.2.app/Contents/Developer
+    else
+      sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+      test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+      test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+    fi
     brew update
     HOMEBREW_TAP_DIR="/usr/local/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders"
     mkdir -p "$HOMEBREW_TAP_DIR"
