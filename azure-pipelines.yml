@@ -20,9 +20,9 @@ steps:
     if [[ "$(uname -s)" != "Darwin" ]]; then
       sudo chown -R $(whoami) /usr/local
       sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-      test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-      test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
     fi
+    test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+    test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
     brew update
     #HOMEBREW_TAP_DIR="/usr/local/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders"
     #mkdir -p "$HOMEBREW_TAP_DIR"
