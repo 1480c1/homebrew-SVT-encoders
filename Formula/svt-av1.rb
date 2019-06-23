@@ -31,12 +31,7 @@ class SvtAv1 < Formula
 
   def install
     mkdir "_build" do
-      if build.head?
-        args = %W[
-          -DBUILD_TESTING=OFF
-          -DNATIVE=OFF
-        ]
-      end
+      args = ["-DBUILD_TESTING=OFF", "-DNATIVE=OFF"] if build.head?
       system "cmake", "..", *std_cmake_args
       system "make", "install"
       prefix.install_metafiles
