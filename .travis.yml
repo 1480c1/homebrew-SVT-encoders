@@ -18,7 +18,7 @@ script:
   - brew audit SVT-AV1
   - brew install --build-bottle SVT-AV1
   - brew bottle --json  SVT-AV1
-  - sed -i 's|https://linuxbrew.bintray.com/bottles-svt-encoders|https://github.com/1480c1/homebrew-SVT-encoders/releases/download/bottle|g;s|svt-av1--|svt-av1-|g' *.json
+  - sed -i.bak  -e 's|https://linuxbrew.bintray.com/bottles-svt-encoders|https://github.com/1480c1/homebrew-SVT-encoders/releases/download/bottle|g;s|https://homebrew.bintray.com/bottles-svt-encoders|https://github.com/1480c1/homebrew-SVT-encoders/releases/download/bottle|g;s|svt-av1--|svt-av1-|g' *.json
   - for file in *; do mv "$file" "${file//svt-av1--/svt-av1-}"; done
   - ls -l
 before_deploy:
