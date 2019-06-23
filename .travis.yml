@@ -1,4 +1,4 @@
-language: minimal
+language: ruby
 os: osx
 osx_image:
   - xcode10.2
@@ -9,17 +9,14 @@ cache:
     - $HOME/Library/Caches/Homebrew
 before_cache: brew cleanup
 install:
+  - export HOMEBREW_BINTRAY_USER=1480c1 HOMEBREW_COVERALLS_REPO_TOKEN=$COVERALLS_TOKEN HOMEBREW_BINTRAY_KEY=$BINTRAY_API_TOKEN
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"; fi
 script:
   - mkdir _build && cd _build
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv); test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv); fi
   - brew tap 1480c1/SVT-Encoders
-  - if [[ -f "/home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/svt-av1.rb" ]]; then chmod 644 /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/svt-av1.rb; fi
-  - brew audit SVT-AV1
-  - brew install --build-bottle SVT-AV1
-  - brew bottle --json  SVT-AV1
-  - sed -i.bak  -e 's|https://linuxbrew.bintray.com/bottles-svt-encoders|https://github.com/1480c1/homebrew-SVT-encoders/releases/download/bottle|g;s|https://homebrew.bintray.com/bottles-svt-encoders|https://github.com/1480c1/homebrew-SVT-encoders/releases/download/bottle|g;s|svt-av1--|svt-av1-|g' *.json
-  - for file in *; do mv "$file" "${file//svt-av1--/svt-av1-}"; done
+  - if [[ -f "/home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/*.rb" ]]; then chmod 644 /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/*.rb; fi
+  - brew test-bot --coverage --bintray-org=1480c1/homebrew-SVT-encoders --git-name=1480c1 --git-email=ccom@randomderp.com --ci-upload
   - ls -l
 before_deploy:
   - export TRAVIS_TAG="bottle"
