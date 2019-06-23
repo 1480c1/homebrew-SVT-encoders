@@ -13,9 +13,10 @@ pool:
 steps:
 - bash: |
     set -e
-    if [[ "$(uname -s)" =~ "Darwin*" ]]; then
+    if [[ "$(uname -s)" = "Darwin" ]]; then
       sudo xcode-select --switch /Applications/Xcode_10.2.app/Contents/Developer
     else
+      sudo chown -R $(whoami) /usr/local
       sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
       test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
       test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
