@@ -11,11 +11,10 @@ before_cache: brew cleanup
 install:
   - export HOMEBREW_BINTRAY_USER=1480c1 HOMEBREW_COVERALLS_REPO_TOKEN=$COVERALLS_TOKEN HOMEBREW_BINTRAY_KEY=$BINTRAY_API_TOKEN
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"; fi
-script:
-  - mkdir _build && cd _build
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv); test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv); fi
   - brew tap 1480c1/SVT-Encoders
   - if [[ -f "/home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/*.rb" ]]; then chmod 644 /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/*.rb; fi
+script:
   - brew test-bot --coverage --bintray-org=1480c1/homebrew-SVT-encoders --git-name=1480c1 --git-email=ccom@randomderp.com --ci-upload
   - ls -l
 before_deploy:
