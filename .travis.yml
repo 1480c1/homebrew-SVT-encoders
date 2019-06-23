@@ -15,7 +15,7 @@ script:
   - brew tap 1480c1/SVT-Encoders
   - if [[ -f "/home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/svt-av1.rb" ]]; then chmod 644 /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/svt-av1.rb; fi
   - brew audit SVT-AV1
-  - brew install -s --build-bottle SVT-AV1
+  - brew install --build-bottle SVT-AV1
   - brew bottle SVT-AV1
   - for file in *.bottle.tar.gz ; do mv "$file" "${file//svt-av1--/svt-av1-}" ; done
 before_deploy: export TRAVIS_TAG="bottle"
