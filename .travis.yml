@@ -13,6 +13,7 @@ script:
   - brew audit SVT-AV1
   - brew install --build-bottle SVT-AV1
   - brew bottle SVT-AV1
+before_deploy: export TRAVIS_TAG="bottle"
 deploy: &deploybase
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
