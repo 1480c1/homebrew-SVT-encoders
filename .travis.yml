@@ -22,3 +22,12 @@ matrix:
       osx_image: xcode10.1
     - os: linux
       osx_image: xcode9.2
+deploy:
+  provider: releases
+  api_key: $GITHUB_OAUTH_TOKEN
+  skip_cleanup: true
+  draft: true
+  file_glob: true
+  file: svt-av1--0.5.0.*.bottle.tar.gz
+  on:
+    repo: 1480c1/homebrew-SVT-encoders
