@@ -13,6 +13,10 @@ pool:
 steps:
 - bash: |
     set -e
+    if [[ -n "$SYSTEM_PULLREQUEST_PULLREQUESTNUMBER" ]]; then
+      git fetch origin "master:master" "pull/$SYSTEM_PULLREQUEST_PULLREQUESTNUMBER/head:pr"
+      git checkout pr
+    fi
     if [[ "$(uname -s)" != "Darwin" ]]; then
       sudo chown -R $(whoami) /usr/local
       sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
@@ -27,5 +31,7 @@ steps:
     brew tap 1480c1/SVT-encoders
     brew install --build-bottle SVT-AV1
     brew bottle --json SVT-AV1
-    brew test-bot
+    brew test-bot --bintray-org=1480c1 --git-name=1480c1 --git-email=ccom@randomderp.com SVT-AV1
   displayName: Run brew test-bot
+  env:
+    HOMEBREW_GITHUB_API_TOKEN: $(GITHUB_OAUTH_TOKEN)
