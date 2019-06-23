@@ -1,0 +1,23 @@
+strategy:
+  matrix:
+    linux:
+      imageName: 'ubuntu-16.04'
+    mac10.14:
+      imageName: 'macos-10.14'
+    mac10.13:
+      imageName: 'macOS-10.13'
+
+pool:
+  vmImage: $(imageName)
+
+steps:
+- bash: |
+    set -e
+    [[ "$Agent.OS" = "Darwin" ]] && sudo xcode-select --switch /Applications/Xcode_10.2.app/Contents/Developer
+    brew update
+    HOMEBREW_TAP_DIR="/usr/local/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders"
+    mkdir -p "$HOMEBREW_TAP_DIR"
+    rm -rf "$HOMEBREW_TAP_DIR"
+    ln -s "$PWD" "$HOMEBREW_TAP_DIR"
+    brew test-bot
+  displayName: Run brew test-bot
