@@ -4,6 +4,10 @@ osx_image:
   - xcode10.2
   - xcode10.1
   - xcode9.2
+cache:
+  directories:
+    - $HOME/Library/Caches/Homebrew
+before_cache: brew cleanup
 install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"; fi
 script:
