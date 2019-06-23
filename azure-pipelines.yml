@@ -24,5 +24,7 @@ steps:
     mkdir -p "$HOMEBREW_TAP_DIR"
     rm -rf "$HOMEBREW_TAP_DIR"
     ln -s "$PWD" "$HOMEBREW_TAP_DIR"
+    brew install --build-bottle SVT-AV1
+    brew bottle --json SVT-AV1
     brew test-bot
   displayName: Run brew test-bot
