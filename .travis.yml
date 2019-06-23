@@ -15,7 +15,6 @@ script:
   - if [[ -f "/home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/svt-av1.rb" ]]; then chmod 644 /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/svt-av1.rb; fi
   - brew audit SVT-AV1
   - brew install --build-bottle SVT-AV1
-after_script:
   - brew bottle SVT-AV1
 matrix:
   exclude:
