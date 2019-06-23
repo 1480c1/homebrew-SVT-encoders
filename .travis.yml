@@ -1,12 +1,9 @@
 language: minimal
-os:
-  - linux
-  - osx
+os: osx
 osx_image:
   - xcode10.2
   - xcode10.1
   - xcode9.2
-dist: xenial
 install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"; fi
 script:
@@ -16,13 +13,7 @@ script:
   - brew audit SVT-AV1
   - brew install --build-bottle SVT-AV1
   - brew bottle SVT-AV1
-matrix:
-  exclude:
-    - os: linux
-      osx_image: xcode10.1
-    - os: linux
-      osx_image: xcode9.2
-deploy:
+deploy: &deploybase
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
   skip_cleanup: true
@@ -31,3 +22,11 @@ deploy:
   file: svt-av1--0.5.0.*.bottle.tar.gz
   on:
     repo: 1480c1/homebrew-SVT-encoders
+matrix:
+  include:
+    - stage: Build Linux & Deploy
+      os: linux
+      dist: xenial
+      deploy:
+        <<: *deploybase
+        draft: false
