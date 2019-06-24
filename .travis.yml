@@ -1,6 +1,4 @@
 language: ruby
-os: linux
-dist: xenial
 git:
   clone: false
 cache:
@@ -18,7 +16,6 @@ stages:
   - High Sierra
   - Sierra
   - Linux
-stage: Linux
 before_cache: brew cleanup
 before_install:
   - mkdir -p ~/bottles
@@ -82,3 +79,6 @@ matrix:
     - stage: Sierra
       os: osx
       osx_image: xcode9.2
+    - stage: Linux
+      os: linux
+      dist: xenial
