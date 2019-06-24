@@ -37,10 +37,11 @@ steps:
     brew test-bot SVT-AV1 --ci-upload --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders/" --bintray-org="1480c1" --verbose
     export VERSION_STRING=$(git describe --tag --dirty="" --broken="" --abbrev=0)
     export VERSION_STRING=$(python -c "exec('print(\"$VERSION_STRING\"[1:])')")
-    curl -u1480c1:$(HOMEBREW_BINTRAY_KEY) -H Content-Type:application/json -H Accept:application/json -X POST https://api.bintray.com/content/1480c1/homebrew-SVT-encoders/SVT-AV1/$VERSION_STRING/publish -d "{ \"discard\": \"false\" }"
+    curl -u1480c1:$HOMEBREW_BINTRAY_KEY -H Content-Type:application/json -H Accept:application/json -X POST https://api.bintray.com/content/1480c1/homebrew-SVT-encoders/SVT-AV1/$VERSION_STRING/publish -d "{ \"discard\": \"false\" }"
     ssh-keyscan github.com > ~/.ssh/known_hosts
-    git push https://$(HOMEBREW_GITHUB_API_TOKEN)@github.com/1480c1/homebrew-SVT-encoders.git
+    git push https://$(HOMEBREW_GITHUB_API_TOKEN)@github.com/1480c1/homebrew-SVT-encoders.git HEAD:master
   displayName: brew test-bot upload
   env:
+    HOMEBREW_BINTRAY_USER: 1480c1
     HOMEBREW_GITHUB_API_TOKEN: $(GITHUB_OAUTH_TOKEN)
     HOMEBREW_BINTRAY_KEY: $(BINTRAY_API_TOKEN)
