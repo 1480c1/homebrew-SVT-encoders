@@ -33,5 +33,17 @@ steps:
     brew tap 1480c1/SVT-encoder
     test -f /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/svt-av1.rb && sudo chmod 644 /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/svt-av1.rb || true
     test -d ~/.linuxbrew && eval `~/.linuxbrew/bin/brew shellenv` || { test -d /home/linuxbrew/.linuxbrew && eval `/home/linuxbrew/.linuxbrew/bin/brew shellenv`; } || true
-    brew test-bot SVT-AV1 --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders" --verbose
+    brew update
+    git -C $(brew --repository homebrew/core) checkout master -f
+    git -C $(brew --repository homebrew/core) reset --hard origin/master
+    brew --env
+    brew config
+    brew readall --aliases 1480c1/svt-encoders
+    brew uses --recursive 1480c1/svt-encoders/svt-av1
+    brew install --only-dependencies 1480c1/svt-encoders/svt-av1
+    brew install --build-bottle 1480c1/svt-encoders/svt-av1
+    brew linkage --test 1480c1/svt-encoders/svt-av1
+    brew install --only-dependencies --include-test 1480c1/svt-encoders/svt-av1
+    brew test 1480c1/svt-encoders/svt-av1
+    brew bottle --no-rebuild --json --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders" 1480c1/svt-encoders/svt-av1
   displayName: Run brew test-bot
