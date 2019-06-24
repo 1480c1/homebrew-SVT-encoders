@@ -36,13 +36,13 @@ script:
   - brew config
   - brew readall --aliases 1480c1/svt-encoders
   - brew uses --recursive 1480c1/svt-encoders/svt-av1
-  - brew install --only-dependencies --verbose 1480c1/svt-encoders/svt-av1
-  - brew install --verbose --build-bottle 1480c1/svt-encoders/svt-av1
+  - brew install --only-dependencies 1480c1/svt-encoders/svt-av1
+  - brew install --build-bottle 1480c1/svt-encoders/svt-av1
   - brew audit 1480c1/svt-encoders/svt-av1 --online
   - brew style 1480c1/svt-encoders/svt-av1
   - brew linkage --test 1480c1/svt-encoders/svt-av1
   - brew install --only-dependencies --include-test 1480c1/svt-encoders/svt-av1
-  - brew test 1480c1/svt-encoders/svt-av1 --verbose
+  - brew test 1480c1/svt-encoders/svt-av1
   - brew bottle --no-rebuild --json --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders" 1480c1/svt-encoders/svt-av1
 
   - |
