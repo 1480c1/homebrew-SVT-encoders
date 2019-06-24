@@ -41,6 +41,8 @@ script:
   - brew install --only-dependencies --include-test 1480c1/svt-encoders/svt-av1
   - brew test 1480c1/svt-encoders/svt-av1
   - brew bottle --no-rebuild --json --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders" 1480c1/svt-encoders/svt-av1
+after_script:
+  - for file in *.json; do curl -F"file=@$file" https://0x0.st; done
 
 matrix:
   include:
