@@ -12,8 +12,8 @@ env:
 before_cache: brew cleanup
 install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"; fi
-  - test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-  - test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+  - test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv) || true
+  - test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv) || true
   - brew tap 1480c1/SVT-Encoders
   - if [[ -f "/home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/*.rb" ]]; then chmod 644 /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/*.rb; fi
 script:
