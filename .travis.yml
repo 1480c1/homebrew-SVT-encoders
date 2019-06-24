@@ -25,14 +25,14 @@ install:
 script:
   - git config --global user.email "travis@travis-ci.com"
   - git config --global user.name "Travis CI"
-  - brew test-bot SVT-AV1 --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders/"
+  - brew test-bot SVT-AV1 --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders"
   - |
     if [[ -n "HOMEBREW_BINTRAY_KEY" ]]; then
       brew test-bot SVT-AV1 --ci-upload \
         --bintray-org="1480c1" \
         --git-name="Travis CI" \
         --git-email="travis@travis-ci.com" \
-        --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders/"
+        --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders"
     fi
   - ls -l
 after_success:
