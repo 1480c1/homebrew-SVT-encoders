@@ -9,7 +9,7 @@ class SvtAv1 < Formula
   bottle do
     cellar :any
     rebuild 2
-    sha256 "0179e4b5bee0d6580e19f7f52968b6021fbbfa05dedb6e72ab158eababe94e14" => :sierra
+    sha256 "d1446ad899a89f870314609f95c175c02e8eafb357cc1ec235256ae700b71c05" => :high_sierra
   end
 
   depends_on "cmake" => :build
