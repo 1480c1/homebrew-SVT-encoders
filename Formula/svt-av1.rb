@@ -7,6 +7,7 @@ class SvtAv1 < Formula
       # It's just v0.5.0 with patches applied to the cmakelists
       # to remove unecessary and add necessary cflags for building properly.
       # Fixed in HEAD and in the next release.
+  version "0.5.0"
   head "https://github.com/OpenVisualCloud/SVT-AV1.git"
 
   bottle do
