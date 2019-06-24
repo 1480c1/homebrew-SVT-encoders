@@ -41,25 +41,6 @@ script:
   - brew install --only-dependencies --include-test 1480c1/svt-encoders/svt-av1
   - brew test 1480c1/svt-encoders/svt-av1
   - brew bottle --no-rebuild --json --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders" 1480c1/svt-encoders/svt-av1
-after_success:
-  - cd $(brew --repository 1480c1/SVT-encoders)
-  - git config --global user.email "travis@travis-ci.com"
-  - git config --global user.name "Travis CI"
-  - git fetch --all
-  - git reset origin/master
-  - |
-    if [[ "$(uname -s)" =  "Darwin" ]]; then
-      case $(sw_vers -productVersion | cut -d. -f2) in
-        12) MAC_OS_NAME="Sierra" ;;
-        13) MAC_OS_NAME="High Sierra" ;;
-        14) MAC_OS_NAME="Mojave" ;;
-        *) MAC_OS_NAME="Unknown" ;;
-      esac
-      git commit -am "SVT-AV1: Update bottle for $MAC_OS_NAME [skip ci]"
-    else
-      git commit -am "SVT-AV1: Update bottle for linux [skip ci]"
-    fi
-  - if [[ -n "$GITHUB_OAUTH_TOKEN" && -n "$TRAVIS_REPO_SLUG" ]]; then git push https://${GITHUB_OAUTH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git; fi
 
 matrix:
   include:
@@ -82,3 +63,23 @@ matrix:
               --bintray-org="1480c1" \
               --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders"
           fi
+      after_success:
+        - cd $(brew --repository 1480c1/SVT-encoders)
+        - git config --global user.email "travis@travis-ci.com"
+        - git config --global user.name "Travis CI"
+        - git fetch --all
+        - git reset origin/master
+        #- |
+        #  if [[ "$(uname -s)" =  "Darwin" ]]; then
+        #    case $(sw_vers -productVersion | cut -d. -f2) in
+        #      12) MAC_OS_NAME="Sierra" ;;
+        #      13) MAC_OS_NAME="High Sierra" ;;
+        #      14) MAC_OS_NAME="Mojave" ;;
+        #      *) MAC_OS_NAME="Unknown" ;;
+        #    esac
+        #    git commit -am "SVT-AV1: Update bottle for $MAC_OS_NAME [skip ci]"
+        #  else
+        #    git commit -am "SVT-AV1: Update bottle for linux [skip ci]"
+        #  fi
+        - 'git commit -am "SVT-AV1: Update bottle [skip ci]"'
+        - if [[ -n "$GITHUB_OAUTH_TOKEN" && -n "$TRAVIS_REPO_SLUG" ]]; then git push https://${GITHUB_OAUTH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git; fi
