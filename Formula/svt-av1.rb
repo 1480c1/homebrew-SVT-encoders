@@ -12,8 +12,8 @@ class SvtAv1 < Formula
 
   bottle do
     root_url "https://dl.bintray.com/1480c1/bottles-svt-encoders"
-    cellar :any
-    sha256 "07f9db1e6f8d1d047010aa60ccf7235ee1b58e7e93d935fea9d7c8a8a0618584" => :mojave
+    cellar :any_skip_relocation
+    sha256 "00509e3ed21a874e0244df5cbce807159c619b65e9a2c941c69675fa28a813c3" => :x86_64_linux
   end
 
   depends_on "cmake" => :build
