@@ -41,13 +41,6 @@ script:
   - brew install --only-dependencies --include-test 1480c1/svt-encoders/svt-av1
   - brew test 1480c1/svt-encoders/svt-av1
   - brew bottle --no-rebuild --json --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders" 1480c1/svt-encoders/svt-av1
-
-  - |
-    if [[ -n "HOMEBREW_BINTRAY_KEY" ]]; then
-      brew test-bot SVT-AV1 --ci-upload \
-        --bintray-org="1480c1" \
-        --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders"
-    fi
 after_success:
   - cd $(brew --repository 1480c1/SVT-encoders)
   - git config --global user.email "travis@travis-ci.com"
@@ -82,3 +75,10 @@ matrix:
     - stage: Linux
       os: linux
       dist: xenial
+      after_script:
+        - |
+          if [[ -n "HOMEBREW_BINTRAY_KEY" ]]; then
+            brew test-bot SVT-AV1 --ci-upload \
+              --bintray-org="1480c1" \
+              --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders"
+          fi
