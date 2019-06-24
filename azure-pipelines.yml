@@ -31,7 +31,7 @@ steps:
 
 - bash: |
     brew tap 1480c1/SVT-encoder
-    for formula in `brew --repository 1480c1/SVT-encoders`/Formula/*.rb; do [ -e "$formula" ] && chmod 644 "$formula" || true; done
+    test -f /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/svt-av1.rb && chmod 644 /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/svt-av1.rb || true
     test -d ~/.linuxbrew && eval `~/.linuxbrew/bin/brew shellenv` || { test -d /home/linuxbrew/.linuxbrew && eval `/home/linuxbrew/.linuxbrew/bin/brew shellenv`; } || true
     brew test-bot SVT-AV1 --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders" --verbose
   displayName: Run brew test-bot
