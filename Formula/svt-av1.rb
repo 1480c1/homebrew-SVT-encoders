@@ -7,8 +7,9 @@ class SvtAv1 < Formula
   head "https://github.com/OpenVisualCloud/SVT-AV1.git"
 
   bottle do
-    cellar :any_skip_relocation
-    sha256 "9eb4a4e4cb29b87671dab701a91689730941089e458be384c834a0c67d310bbe" => :x86_64_linux
+    cellar :any
+    rebuild 1
+    sha256 "0379aaf5158549128130476efa3bbb9bf7e36ba82c5d021999a050f5dd61ebdc" => :mojave
   end
 
   depends_on "cmake" => :build
