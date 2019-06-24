@@ -8,8 +8,8 @@ class SvtAv1 < Formula
 
   bottle do
     cellar :any
-    rebuild 1
-    sha256 "0379aaf5158549128130476efa3bbb9bf7e36ba82c5d021999a050f5dd61ebdc" => :mojave
+    rebuild 2
+    sha256 "0179e4b5bee0d6580e19f7f52968b6021fbbfa05dedb6e72ab158eababe94e14" => :sierra
   end
 
   depends_on "cmake" => :build
