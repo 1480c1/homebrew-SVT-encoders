@@ -25,7 +25,24 @@ install:
 script:
   - git config --global user.email "travis@travis-ci.com"
   - git config --global user.name "Travis CI"
-  - brew test-bot SVT-AV1 --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders"
+
+  - brew untap homebrew/cask
+  - brew update
+  - git -C $(brew --repository homebrew/core) checkout master -f
+  - git -C $(brew --repository homebrew/core) --hard origin/master
+  - brew --env
+  - brew config
+  - brew readall --aliases 1480c1/svt-encoders
+  - brew uses --recursive 1480c1/svt-encoders/svt-av1
+  - brew install --only-dependencies --verbose 1480c1/svt-encoders/svt-av1
+  - brew install --verbose --build-bottle 1480c1/svt-encoders/svt-av1
+  - brew audit 1480c1/svt-encoders/svt-av1 --online
+  - brew style 1480c1/svt-encoders/svt-av1
+  - brew linkage --test 1480c1/svt-encoders/svt-av1
+  - brew install --only-dependencies --include-test 1480c1/svt-encoders/svt-av1
+  - brew test 1480c1/svt-encoders/svt-av1 --verbose
+  - brew bottle --json 1480c1/svt-encoders/svt-av1
+
   - |
     if [[ -n "HOMEBREW_BINTRAY_KEY" ]]; then
       brew test-bot SVT-AV1 --ci-upload \
