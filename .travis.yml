@@ -1,12 +1,6 @@
 language: ruby
-os:
-  - osx
-  - linux
+os: linux
 dist: xenial
-osx_image:
-  - xcode10.2
-  - xcode10.1
-  - xcode9.2
 git:
   clone: false
 cache:
@@ -19,6 +13,12 @@ env:
     - HOMEBREW_COVERALLS_REPO_TOKEN=$COVERALLS_TOKEN
     - HOMEBREW_BINTRAY_KEY=$BINTRAY_API_TOKEN
     - HOMEBREW_GIT_NAME=1480c1
+stages:
+  - Mojave
+  - High Sierra
+  - Sierra
+  - Linux
+stage: Linux
 before_cache: brew cleanup
 before_install:
   - mkdir -p ~/bottles
@@ -59,7 +59,12 @@ after_success:
   - git reset origin/master
   - |
     if [[ "$(uname -s)" =  "Darwin" ]]; then
-      MAC_OS_NAME=$(grep 'SOFTWARE LICENSE AGREEMENT FOR' '/System/Library/CoreServices/Setup Assistant.app/Contents/Resources/en.lproj/OSXSoftwareLicense.rtf' | sed 's/SOFTWARE LICENSE AGREEMENT FOR macOS //g;s/\\//g')
+      case $(sw_vers -productVersion | cut -d. -f2) in
+        12) MAC_OS_NAME="Sierra" ;;
+        13) MAC_OS_NAME="High Sierra" ;;
+        14) MAC_OS_NAME="Mojave" ;;
+        *) MAC_OS_NAME="Unknown" ;;
+      esac
       git commit -am "SVT-AV1: Update bottle for $MAC_OS_NAME [skip ci]"
     else
       git commit -am "SVT-AV1: Update bottle for linux [skip ci]"
@@ -67,8 +72,13 @@ after_success:
   - if [[ -n "$GITHUB_OAUTH_TOKEN" && -n "$TRAVIS_REPO_SLUG" ]]; then git push https://${GITHUB_OAUTH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git; fi
 
 matrix:
-  exclude:
-    - os: linux
+  include:
+    - stage: Mojave
+      os: osx
+      osx_image: xcode10.2
+    - stage: High Sierra
+      os: osx
       osx_image: xcode10.1
-    - os: linux
+    - stage: Sierra
+      os: osx
       osx_image: xcode9.2
