@@ -10,6 +10,11 @@ strategy:
 pool:
   vmImage: $(imageName)
 
+variables:
+  HOMEBREW_BINTRAY_USER: 1480c1
+  HOMEBREW_GITHUB_API_TOKEN: $(GITHUB_OAUTH_TOKEN)
+  HOMEBREW_BINTRAY_KEY: $(BINTRAY_API_TOKEN)
+
 steps:
 - bash: |
     set -e
@@ -17,30 +22,14 @@ steps:
       git fetch origin "master:master" "pull/$SYSTEM_PULLREQUEST_PULLREQUESTNUMBER/head:pr"
       git checkout pr
     fi
-    if [[ "$(uname -s)" != "Darwin" ]]; then
+    if ! [[ "$(imageName)" =~ "macos*" ]]; then
       sudo chown -R $(whoami) /usr/local
       sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
     fi
-    test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv) || true
-    test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv) || true
+    test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv) || { test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv); } || true
   displayName: Setup Brew
 
 - bash: |
-    test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv) || true
-    test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv) || true
+    test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv) || { test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv); } || true
     brew test-bot SVT-AV1 --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders/" --verbose
   displayName: Run brew test-bot
-
-- bash: |
-    test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv) || true
-    test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv) || true
-    brew test-bot SVT-AV1 --ci-upload --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders/" --bintray-org="1480c1" --verbose
-    export VERSION_STRING=$(git describe --tag --dirty="" --broken="" --abbrev=0)
-    export VERSION_STRING=$(python -c "exec('print(\"$VERSION_STRING\"[1:])')")
-    curl -u1480c1:$HOMEBREW_BINTRAY_KEY -H Content-Type:application/json -H Accept:application/json -X POST https://api.bintray.com/content/1480c1/homebrew-SVT-encoders/SVT-AV1/$VERSION_STRING/publish -d "{ \"discard\": \"false\" }"
-    git push https://$(HOMEBREW_GITHUB_API_TOKEN)@github.com/1480c1/homebrew-SVT-encoders.git HEAD:master
-  displayName: brew test-bot upload
-  env:
-    HOMEBREW_BINTRAY_USER: 1480c1
-    HOMEBREW_GITHUB_API_TOKEN: $(GITHUB_OAUTH_TOKEN)
-    HOMEBREW_BINTRAY_KEY: $(BINTRAY_API_TOKEN)
