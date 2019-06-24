@@ -22,14 +22,16 @@ steps:
       git fetch origin "master:master" "pull/$SYSTEM_PULLREQUEST_PULLREQUESTNUMBER/head:pr"
       git checkout pr
     fi
-    if ! [[ "$(imageName)" =~ "macos*" ]]; then
-      sudo chown -R $(whoami) /usr/local
-      sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+    if ! [[ "${OSTYPE:0:6}" = "darwin" ]]; then
+      sudo chown -R `whoami` /usr/local
+      sh -c "`curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh`"
     fi
-    test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv) || { test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv); } || true
+    test -d ~/.linuxbrew && eval `~/.linuxbrew/bin/brew shellenv` || { test -d /home/linuxbrew/.linuxbrew && eval `/home/linuxbrew/.linuxbrew/bin/brew shellenv`; } || true
   displayName: Setup Brew
 
 - bash: |
-    test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv) || { test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv); } || true
-    brew test-bot SVT-AV1 --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders/" --verbose
+    brew tap 1480c1/SVT-encoder
+    for formula in `brew --repository 1480c1/SVT-encoders`/Formula/*.rb; do [ -e "$formula" ] && chmod 644 "$formula" || true; done
+    test -d ~/.linuxbrew && eval `~/.linuxbrew/bin/brew shellenv` || { test -d /home/linuxbrew/.linuxbrew && eval `/home/linuxbrew/.linuxbrew/bin/brew shellenv`; } || true
+    brew test-bot SVT-AV1 --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders" --verbose
   displayName: Run brew test-bot
