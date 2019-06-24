@@ -7,10 +7,8 @@ class SvtAv1 < Formula
   head "https://github.com/OpenVisualCloud/SVT-AV1.git"
 
   bottle do
-    root_url "https://dl.bintray.com/1480c1/bottles-svt-encoders/"
-    cellar :any
-    rebuild 1
-    sha256 "4915de99c84d3ddd454390bab9603af69724ebc36036a8f835d2da8ede1190dc" => :high_sierra
+    cellar :any_skip_relocation
+    sha256 "9eb4a4e4cb29b87671dab701a91689730941089e458be384c834a0c67d310bbe" => :x86_64_linux
   end
 
   depends_on "cmake" => :build
