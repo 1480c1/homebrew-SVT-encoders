@@ -23,11 +23,6 @@ steps:
     fi
     test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv) || true
     test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv) || true
-    brew update
-    #HOMEBREW_TAP_DIR="/usr/local/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders"
-    #mkdir -p "$HOMEBREW_TAP_DIR"
-    #rm -rf "$HOMEBREW_TAP_DIR"
-    #ln -s "$PWD" "$HOMEBREW_TAP_DIR"
   displayName: Setup Brew
 
 - bash: |
@@ -43,7 +38,6 @@ steps:
     export VERSION_STRING=$(git describe --tag --dirty="" --broken="" --abbrev=0)
     export VERSION_STRING=$(python -c "exec('print(\"$VERSION_STRING\"[1:])')")
     curl -u1480c1:$HOMEBREW_BINTRAY_KEY -H Content-Type:application/json -H Accept:application/json -X POST https://api.bintray.com/content/1480c1/homebrew-SVT-encoders/SVT-AV1/$VERSION_STRING/publish -d "{ \"discard\": \"false\" }"
-    ssh-keyscan github.com > ~/.ssh/known_hosts
     git push https://$(HOMEBREW_GITHUB_API_TOKEN)@github.com/1480c1/homebrew-SVT-encoders.git HEAD:master
   displayName: brew test-bot upload
   env:
