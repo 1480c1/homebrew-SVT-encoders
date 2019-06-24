@@ -26,10 +26,9 @@ script:
   - git config --global user.email "travis@travis-ci.com"
   - git config --global user.name "Travis CI"
 
-  - brew untap homebrew/cask
   - brew update
   - git -C $(brew --repository homebrew/core) checkout master -f
-  - git -C $(brew --repository homebrew/core) --hard origin/master
+  - git -C $(brew --repository homebrew/core) reset --hard origin/master
   - brew --env
   - brew config
   - brew readall --aliases 1480c1/svt-encoders
