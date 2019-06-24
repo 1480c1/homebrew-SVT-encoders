@@ -4,6 +4,9 @@ class SvtAv1 < Formula
   url "https://github.com/1480c1/SVT-AV1.git",
       :branch   => "xsave",
       :revision => "a650a74ad68d18d687c58de2cc0e5170785855b6"
+      # It's just v0.5.0 with patches applied to the cmakelists
+      # to remove unecessary and add necessary cflags for building properly.
+      # Fixed in HEAD and in the next release.
   head "https://github.com/OpenVisualCloud/SVT-AV1.git"
 
   bottle do
