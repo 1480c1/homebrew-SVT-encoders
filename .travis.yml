@@ -12,13 +12,14 @@ env:
 before_cache: brew cleanup
 install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv); test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv); fi
+  - test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+  - test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
   - brew tap 1480c1/SVT-Encoders
   - if [[ -f "/home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/*.rb" ]]; then chmod 644 /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/1480c1/homebrew-svt-encoders/Formula/*.rb; fi
 script:
-  - brew install --build-bottle SVT-AV1
-  - brew bottle --json SVT-AV1
-  - brew test-bot --coverage --bintray-org=1480c1/homebrew-SVT-encoders
+  - brew test-bot SVT-AV1 --coverage --root-url="https://github.com/1480c1/homebrew-SVT-encoders/releases/download/bottle/" --verbose
+  - sed -i.bak 's|svt-av1--|svt-av1-|g' *.json
+  - for file in *; do mv "$file" "${file//svt-av1--/svt-av1-}"; done
   - ls -l
 before_deploy:
   - export TRAVIS_TAG="bottle"
