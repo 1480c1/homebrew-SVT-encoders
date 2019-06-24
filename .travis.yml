@@ -7,9 +7,12 @@ osx_image:
   - xcode10.2
   - xcode10.1
   - xcode9.2
+git:
+  clone: false
 cache:
   directories:
     - $HOME/Library/Caches/Homebrew
+    - $HOME/bottles
 env:
   global:
     - HOMEBREW_BINTRAY_USER=1480c1
@@ -17,15 +20,15 @@ env:
     - HOMEBREW_BINTRAY_KEY=$BINTRAY_API_TOKEN
     - HOMEBREW_GIT_NAME=1480c1
 before_cache: brew cleanup
+before_install:
+  - mkdir -p ~/bottles
+  - cd ~/bottles
 install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"; fi
   - test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv) || { test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv); } || true
   - brew tap 1480c1/SVT-Encoders
   - for formula in $(brew --repository 1480c1/SVT-encoders)/Formula/*.rb; do [ -e "$formula" ] && chmod 644 "$formula" || true; done
 script:
-  - git config --global user.email "travis@travis-ci.com"
-  - git config --global user.name "Travis CI"
-
   - brew update
   - git -C $(brew --repository homebrew/core) checkout master -f
   - git -C $(brew --repository homebrew/core) reset --hard origin/master
@@ -40,19 +43,27 @@ script:
   - brew linkage --test 1480c1/svt-encoders/svt-av1
   - brew install --only-dependencies --include-test 1480c1/svt-encoders/svt-av1
   - brew test 1480c1/svt-encoders/svt-av1 --verbose
-  - brew bottle --json 1480c1/svt-encoders/svt-av1
+  - brew bottle --no-rebuild --json --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders" 1480c1/svt-encoders/svt-av1
 
   - |
     if [[ -n "HOMEBREW_BINTRAY_KEY" ]]; then
       brew test-bot SVT-AV1 --ci-upload \
         --bintray-org="1480c1" \
-        --git-name="Travis CI" \
-        --git-email="travis@travis-ci.com" \
         --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders"
     fi
-  - ls -l
 after_success:
   - cd $(brew --repository 1480c1/SVT-encoders)
+  - git config --global user.email "travis@travis-ci.com"
+  - git config --global user.name "Travis CI"
+  - git fetch --all
+  - git reset origin/master
+  - |
+    if [[ "$(uname -s)" =  "Darwin" ]]; then
+      MAC_OS_NAME=$(grep 'SOFTWARE LICENSE AGREEMENT FOR' '/System/Library/CoreServices/Setup Assistant.app/Contents/Resources/en.lproj/OSXSoftwareLicense.rtf' | sed 's/SOFTWARE LICENSE AGREEMENT FOR macOS //g;s/\\//g')
+      git commit -am "SVT-AV1: Update bottle for $MAC_OS_NAME [skip ci]"
+    else
+      git commit -am "SVT-AV1: Update bottle for linux [skip ci]"
+    fi
   - if [[ -n "$GITHUB_OAUTH_TOKEN" && -n "$TRAVIS_REPO_SLUG" ]]; then git push https://${GITHUB_OAUTH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git; fi
 
 matrix:
