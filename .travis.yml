@@ -56,14 +56,13 @@ matrix:
     - stage: Linux
       os: linux
       dist: xenial
-      after_script:
+      after_success:
         - |
           if [[ -n "HOMEBREW_BINTRAY_KEY" ]]; then
             brew test-bot SVT-AV1 --ci-upload \
               --bintray-org="1480c1" \
               --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders"
           fi
-      after_success:
         - cd $(brew --repository 1480c1/SVT-encoders)
         - git config --global user.email "travis@travis-ci.com"
         - git config --global user.name "Travis CI"
