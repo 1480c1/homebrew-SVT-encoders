@@ -2,6 +2,7 @@ language: ruby
 git:
   clone: false
 cache:
+  bundler: true
   directories:
     - $HOME/Library/Caches/Homebrew
     - $HOME/bottles
