@@ -12,8 +12,11 @@ class SvtAv1 < Formula
 
   bottle do
     root_url "https://dl.bintray.com/1480c1/bottles-svt-encoders"
-    cellar :any_skip_relocation
-    sha256 "73512f1bf52f75e41a5e0eb1e2cd336bfab5995418766141ecfd6144460ee974" => :x86_64_linux
+    cellar :any
+    sha256 "a134161fea544ea2a22598b9fea129679d3e81642ea6f440dfc0398db3eabb49" => :mojave
+    sha256 "44fb1a337c5b37ab44ecc2354d25404cf049a43cfd59488b677fb99c03eeab4a" => :high_sierra
+    sha256 "c321aab1a1f5399f46a513335cd119062e16ca7872e2efb5deca6a75618e9675" => :sierra
+    sha256 "44595406b044e2332e40eefdb26cd3e534cf326cbeb66c6e3b84429d65b835c8" => :x86_64_linux
   end
 
   depends_on "cmake" => :build
