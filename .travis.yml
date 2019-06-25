@@ -42,7 +42,15 @@ script:
   - brew install --only-dependencies --include-test 1480c1/svt-encoders/svt-av1
   - brew test 1480c1/svt-encoders/svt-av1
   - brew bottle --no-rebuild --json --root-url="https://dl.bintray.com/1480c1/bottles-svt-encoders" 1480c1/svt-encoders/svt-av1
-
+  - TRAVIS_TAG="BOTTLES"
+deploy:
+  provider: releases
+  api_key: $GITHUB_OAUTH_TOKEN
+  skip_cleanup: true
+  overwrite: true
+  file_glob: true
+  file:
+    - svt-av1--*.bottle.*
 matrix:
   include:
     - stage: Mojave
