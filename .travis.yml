@@ -1,6 +1,14 @@
 language: ruby
+os: osx
 git:
   clone: false
+addons:
+  apt:
+    packages:
+      - jq
+  homebrew:
+    packages:
+      - jq
 cache:
   bundler: true
   directories:
@@ -13,9 +21,7 @@ env:
     - HOMEBREW_BINTRAY_KEY=$BINTRAY_API_TOKEN
     - HOMEBREW_GIT_NAME=1480c1
 stages:
-  - Mojave
-  - High Sierra
-  - Sierra
+  - Test
   - Linux
 before_cache: brew cleanup
 before_install:
@@ -53,19 +59,14 @@ deploy:
     - svt-av1--*.bottle.*
 matrix:
   include:
-    - stage: Mojave
-      os: osx
-      osx_image: xcode10.2
-    - stage: High Sierra
-      os: osx
-      osx_image: xcode10.1
-    - stage: Sierra
-      os: osx
-      osx_image: xcode9.2
+    - osx_image: xcode10.2
+    - osx_image: xcode10.1
+    - osx_image: xcode9.2
     - stage: Linux
       os: linux
       dist: xenial
       after_success:
+        - curl -s https://api.github.com/repos/$TRAVIS_REPO_SLUG/releases/latest | jq -r '.assets[].browser_download_url' | wget -qi -
         - |
           if [[ -n "HOMEBREW_BINTRAY_KEY" ]]; then
             brew test-bot SVT-AV1 --ci-upload \
