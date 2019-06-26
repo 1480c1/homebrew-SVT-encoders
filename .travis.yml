@@ -68,7 +68,7 @@ matrix:
       dist: xenial
       after_success:
         - cd ~/bottles
-        - curl -s https://api.github.com/repos/$TRAVIS_REPO_SLUG/releases/latest | jq -r '.assets[].browser_download_url' | wget -qi -
+        - curl -s https://api.github.com/repos/1480c1/homebrew-SVT-encoders/releases/latest | jq -r '.assets[].browser_download_url' | wget -qi -
         - |
           if [[ -n "HOMEBREW_BINTRAY_KEY" ]]; then
             brew test-bot SVT-AV1 --ci-upload \
