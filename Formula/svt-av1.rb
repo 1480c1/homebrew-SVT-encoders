@@ -1,13 +1,9 @@
 class SvtAv1 < Formula
   desc "Multicore AV1 Encoder from OpenVisualCloud"
   homepage "https://github.com/OpenVisualCloud/SVT-AV1"
-  url "https://github.com/1480c1/SVT-AV1.git",
-      :branch   => "xsave",
-      :revision => "a650a74ad68d18d687c58de2cc0e5170785855b6"
-  # It's just v0.5.0 with patches applied to the cmakelists
-  # to remove unecessary and add necessary cflags for building properly.
-  # Fixed in HEAD and in the next release.
-  version "0.5.0"
+  url "https://github.com/OpenVisualCloud/SVT-AV1/archive/v0.6.0.tar.gz"
+  sha256 "4ff6f05a9528fe8a7b3d6708fe1115d15d26a5a9b0b676d8a250a0b2e8630579"
+  version "0..0"
   head "https://github.com/OpenVisualCloud/SVT-AV1.git"
 
   bottle do
